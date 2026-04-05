@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valientes Sin Máscaras – Mentoría Grupal</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.metal {
+  background: linear-gradient(180deg,#ffffff 0%,#c8c8c8 20%,#f0f0f0 40%,#888 55%,#d4d4d4 70%,#fff 85%,#aaa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.metal-gold {
+  background: linear-gradient(180deg,#fff8d6 0%,#e6c84a 18%,#fff0a0 38%,#b8922a 55%,#f5d97a 72%,#fffbe8 88%,#c9a83c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── CARD WRAPPER CON LINK ── */
+.card-link {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.card {
+  width: 540px;
+  background: #000;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 40px 100px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.06);
+  transition: box-shadow 0.3s, transform 0.2s;
+}
+
+.card-link:hover .card {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.12), 0 50px 120px rgba(0,0,0,0.9), 0 0 60px rgba(255,255,255,0.04);
+}
+
+.card::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb { position:absolute; border-radius:50%; pointer-events:none; z-index:0; }
+.orb-top { width:300px;height:300px;top:-80px;right:-60px;background:radial-gradient(circle,rgba(200,200,200,0.04) 0%,transparent 70%); }
+.orb-bot { width:250px;height:250px;bottom:-60px;left:-40px;background:radial-gradient(circle,rgba(180,160,80,0.06) 0%,transparent 70%); }
+
+.chrome-bar { height:3px;background:linear-gradient(90deg,transparent 0%,#555 10%,#fff 30%,#ccc 50%,#fff 70%,#555 90%,transparent 100%); }
+
+.logo-section { position:relative;z-index:2;padding:32px 40px 0;display:flex;align-items:center;gap:14px; }
+.shield-icon { width:52px;height:52px;flex-shrink:0; }
+.brand-info { display:flex;flex-direction:column; }
+.brand-name { font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px; }
+.brand-sub { font-size:9.5px;letter-spacing:3.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:2px; }
+
+.line { margin:20px 40px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12) 20%,rgba(255,255,255,0.25) 50%,rgba(255,255,255,0.12) 80%,transparent);position:relative;z-index:2; }
+
+.hero { padding:0 40px;position:relative;z-index:2; }
+.hero-eyebrow { font-size:10px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:6px; }
+.hero-headline { font-family:'Bebas Neue',sans-serif;font-size:66px;line-height:0.95;letter-spacing:2px; }
+.hero-sub { font-size:13px;font-weight:300;color:rgba(255,255,255,0.45);letter-spacing:1px;margin-top:10px;line-height:1.5; }
+
+.pain-banner { margin:22px 40px 0;border:1px solid rgba(255,255,255,0.1);border-radius:3px;padding:16px 20px;background:rgba(255,255,255,0.02);position:relative;z-index:2; }
+.pain-banner::before { content:'ESTE PROGRAMA ES PARA TI SI…';display:block;font-size:8.5px;letter-spacing:3px;color:rgba(255,255,255,0.25);margin-bottom:12px; }
+.pain-item { display:flex;align-items:flex-start;gap:10px;margin-bottom:9px; }
+.pain-item:last-child { margin-bottom:0; }
+.pain-dash { font-size:11px;color:rgba(255,255,255,0.2);flex-shrink:0;margin-top:1px; }
+.pain-text { font-size:12.5px;font-weight:600;color:rgba(255,255,255,0.78);line-height:1.45;letter-spacing:0.3px; }
+
+.offer-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 40px 0;position:relative;z-index:2; }
+.offer-cell { border:1px solid rgba(255,255,255,0.07);border-radius:3px;padding:13px 15px;background:rgba(255,255,255,0.015); }
+.offer-label { font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:9px; }
+.offer-item { display:flex;align-items:flex-start;gap:8px;margin-bottom:6px; }
+.offer-item:last-child { margin-bottom:0; }
+.offer-icon { font-size:12px;flex-shrink:0; }
+.offer-text { font-size:11.5px;color:rgba(255,255,255,0.7);font-weight:600;line-height:1.4; }
+
+.quote-strip { margin:18px 40px 0;padding:18px 22px;border-left:2px solid;border-image:linear-gradient(180deg,#fff 0%,#888 50%,#fff 100%) 1;background:rgba(255,255,255,0.018);position:relative;z-index:2; }
+.quote-strip p { font-size:14px;font-style:italic;font-weight:300;color:rgba(255,255,255,0.75);line-height:1.6;letter-spacing:0.3px; }
+.quote-author { font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px; }
+
+.pill-row { display:flex;flex-wrap:wrap;gap:7px;padding:16px 40px 0;position:relative;z-index:2; }
+.pill { border:1px solid rgba(255,255,255,0.14);border-radius:2px;padding:5px 12px;font-size:10.5px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,0.55);text-transform:uppercase; }
+
+.cta-section { padding:20px 40px 32px;position:relative;z-index:2; }
+.no-bs { display:flex;align-items:center;gap:8px;margin-bottom:14px; }
+.no-bs-text { font-size:10px;letter-spacing:1.5px;color:rgba(255,255,255,0.2);text-transform:uppercase; }
+
+/* ── BOTÓN CTA METÁLICO ── */
+.cta-btn {
+  display: block;
+  width: 100%;
+  padding: 17px;
+  background: linear-gradient(180deg,#e0e0e0 0%,#b0b0b0 20%,#f5f5f5 45%,#909090 65%,#d0d0d0 80%,#f8f8f8 100%);
+  color: #000;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 4px;
+  border-radius: 2px;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 8px 30px rgba(255,255,255,0.07);
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.cta-btn::after {
+  content:'';
+  position:absolute;
+  top:0;left:-100%;
+  width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent);
+  animation:shine 2.8s infinite;
+}
+
+@keyframes shine { 0%{left:-100%} 100%{left:250%} }
+
+.cta-btn:hover { transform:translateY(-1px);box-shadow:0 12px 40px rgba(255,255,255,0.12); }
+
+/* ── BADGE WHATSAPP ── */
+.wa-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(37,211,102,0.25);
+  border-radius: 3px;
+  background: rgba(37,211,102,0.04);
+}
+
+.wa-icon {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+}
+
+.wa-text {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(37,211,102,0.7);
+  font-weight: 700;
+}
+
+.cta-foot { display:flex;justify-content:space-between;margin-top:12px; }
+.cta-foot span { font-size:9.5px;letter-spacing:1.5px;color:rgba(255,255,255,0.18);text-transform:uppercase; }
+
+.bot-bar { height:3px;background:linear-gradient(90deg,transparent 0%,#333 10%,#888 30%,#ccc 50%,#888 70%,#333 90%,transparent 100%); }
+
+/* ── TOOLTIP AL HOVER ── */
+.card-link::after {
+  content: '💬 Toca para ir a WhatsApp';
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: rgba(37,211,102,0.15);
+  border: 1px solid rgba(37,211,102,0.35);
+  color: rgba(37,211,102,0.9);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 8px 20px;
+  border-radius: 20px;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.card-link:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- 🔗 TODA LA IMAGEN ES UN ENLACE A WHATSAPP -->
+<a class="card-link"
+   href="https://wa.me/5804141797466?text=Hola%2C%20quiero%20información%20sobre%20la%20Mentoría%20Grupal%20Valientes%20Sin%20Máscaras%20🛡️"
+   target="_blank"
+   rel="noopener noreferrer"
+   aria-label="Inscríbete en la mentoría - WhatsApp">
+
+  <div class="card">
+    <div class="chrome-bar"></div>
+    <div class="orb orb-top"></div>
+    <div class="orb orb-bot"></div>
+
+    <!-- LOGO -->
+    <div class="logo-section">
+      <svg class="shield-icon" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fff"/>
+            <stop offset="30%" stop-color="#ccc"/>
+            <stop offset="60%" stop-color="#888"/>
+            <stop offset="100%" stop-color="#ddd"/>
+          </linearGradient>
+          <linearGradient id="mg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#eee"/>
+            <stop offset="50%" stop-color="#777"/>
+            <stop offset="100%" stop-color="#bbb"/>
+          </linearGradient>
+        </defs>
+        <path d="M26 4 L46 12 L46 28 C46 38 36 46 26 50 C16 46 6 38 6 28 L6 12 Z" fill="url(#sg)" opacity="0.9"/>
+        <path d="M18 18 L26 34 L34 18" stroke="url(#mg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <ellipse cx="21" cy="22" rx="4" ry="2.5" fill="#000" opacity="0.35"/>
+        <ellipse cx="31" cy="22" rx="4" ry="2.5" fill="#000" opacity="0.35"/>
+      </svg>
+      <div class="brand-info">
+        <div class="brand-name metal">VALIENTES SIN MÁSCARAS</div>
+        <div class="brand-sub">Mentoría Grupal · Sala Premium</div>
+      </div>
+    </div>
+
+    <div class="line"></div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-eyebrow">Programa de Transformación Personal</div>
+      <div class="hero-headline metal">EL MIEDO<br><span class="metal-gold">NO ES</span><br>TU DESTINO.</div>
+      <div class="hero-sub">Deja de sobrevivir. Empieza a construir con propósito.</div>
+    </div>
+
+    <!-- PAIN POINTS -->
+    <div class="pain-banner">
+      <div class="pain-item">
+        <span class="pain-dash">▸</span>
+        <span class="pain-text">Tienes una idea de negocio pero el miedo te paraliza antes de dar el primer paso.</span>
+      </div>
+      <div class="pain-item">
+        <span class="pain-dash">▸</span>
+        <span class="pain-text">Eres joven, tienes energía, pero no sabes qué dirección tomar ni cuál es tu ruta de vida.</span>
+      </div>
+      <div class="pain-item">
+        <span class="pain-dash">▸</span>
+        <span class="pain-text">Sientes que algo invisible te frena cada vez que intentas iniciar tu proyecto.</span>
+      </div>
+      <div class="pain-item">
+        <span class="pain-dash">▸</span>
+        <span class="pain-text">Quieres emprender pero no tienes claridad, método ni nadie que te guíe con honestidad.</span>
+      </div>
+    </div>
+
+    <!-- OFFER -->
+    <div class="offer-grid">
+      <div class="offer-cell">
+        <div class="offer-label">Lo que recibes</div>
+        <div class="offer-item"><span class="offer-icon">◈</span><span class="offer-text">Mentoría especializada</span></div>
+        <div class="offer-item"><span class="offer-icon">◈</span><span class="offer-text">Lun–Vie · 10:00 a.m.</span></div>
+        <div class="offer-item"><span class="offer-icon">◈</span><span class="offer-text">Seguimiento WhatsApp diario</span></div>
+      </div>
+      <div class="offer-cell">
+        <div class="offer-label">Tu kit de arranque</div>
+        <div class="offer-item"><span class="offer-icon">◈</span><span class="offer-text">Material de apoyo</span></div>
+        <div class="offer-item"><span class="offer-icon">◈</span><span class="offer-text">Plan individual estructurado</span></div>
+        <div class="offer-item"><span class="offer-icon">◈</span><span class="offer-text">Ruta de vida personalizada</span></div>
+      </div>
+    </div>
+
+    <!-- QUOTE -->
+    <div class="quote-strip">
+      <p>"Un desafío sólo es una oportunidad para comenzar de nuevo, más inteligentemente."</p>
+      <div class="quote-author">— Bob Proctor</div>
+    </div>
+
+    <!-- PILLS -->
+    <div class="pill-row">
+      <div class="pill">Emprendedores con miedo</div>
+      <div class="pill">Jóvenes sin ruta</div>
+      <div class="pill">Sin milagros</div>
+      <div class="pill">Proceso real</div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <div class="no-bs">
+        <span class="no-bs-text">⛔ Sin atajos · Sin fórmulas mágicas · Solo trabajo real y resultados concretos</span>
+      </div>
+
+      <!-- Botón principal -->
+      <div class="cta-btn">▶ INSCRÍBETE AHORA · CUPOS LIMITADOS</div>
+
+      <!-- Badge WhatsApp -->
+      <div class="wa-badge">
+        <svg class="wa-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="rgba(37,211,102,0.8)"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.532 5.862L.054 23.25a.75.75 0 00.916.916l5.388-1.478A11.951 11.951 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.7-.495-5.262-1.378l-.376-.214-3.899 1.07 1.07-3.899-.214-.376A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" fill="rgba(37,211,102,0.5)"/>
+        </svg>
+        <span class="wa-text">Toca aquí → Abre WhatsApp directo</span>
+      </div>
+
+      <div class="cta-foot">
+        <span>@valientes.sin.mascaras</span>
+        <span>Sala Valiente Consciente</span>
+      </div>
+    </div>
+
+    <div class="bot-bar"></div>
+  </div>
+</a>
+
+</body>
+</html>
